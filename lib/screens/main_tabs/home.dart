@@ -99,28 +99,6 @@ class _HomePageState extends State<HomePage> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        title: Text(
-          'T R A C K     M I T R A',
-          style: GoogleFonts.rubik(
-            fontSize: screenWidth * 0.07,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        centerTitle: true,
-        toolbarHeight: screenHeight * 0.1,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(
-              screenWidth * 0.08,
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         // clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -234,7 +212,7 @@ class _HomePageState extends State<HomePage> {
 
                           _loadCSV();
 
-                          Future.delayed(const Duration(seconds: 2), () {
+                          Future.delayed(const Duration(seconds: 1), () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -333,64 +311,93 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                   : (pickedFile!.extension == 'csv')
-                      ? Container(
-                          height: screenHeight * 0.5,
-                          padding: EdgeInsets.only(
-                              top: screenWidth * 0.03),
-                          child: ListView.builder(
-                            itemCount: _data.length,
-                            // physics: const ingScrollPhysics(),
-                            itemBuilder: (_, index) {
-                              return Card(
-                                margin: const EdgeInsets.all(3),
-                                color: index == 0
-                                    ? Palette.kToDark[00]
-                                    : Colors.white,
-                                child: ListTile(
-                                  leading: Padding(
-                                    padding: index == 0 ?  EdgeInsets.only(top: screenWidth * 0.0048) : EdgeInsets.only(top: screenWidth * 0.0155),
-                                    child: Text(
-                                      _data[index][0].toString(),
-                                      style: GoogleFonts.cabin(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: index == 0
-                                            ? screenWidth * 0.055
-                                            : screenWidth * 0.03,
-                                        color: index == 0
-                                            ? Colors.white
-                                            : Palette.kToDark[700],
+                      ? Stack(
+                          children: [
+                            Container(
+                              height: screenHeight * 0.5,
+                              padding: EdgeInsets.only(top: screenWidth * 0.03),
+                              child: ListView.builder(
+                                itemCount: _data.length,
+                                // physics: const ingScrollPhysics(),
+                                itemBuilder: (_, index) {
+                                  return Card(
+                                    margin: const EdgeInsets.all(3),
+                                    color: index == 0
+                                        ? Palette.kToDark[00]
+                                        : Colors.white,
+                                    child: ListTile(
+                                      leading: Padding(
+                                        padding: index == 0
+                                            ? EdgeInsets.only(
+                                                top: screenWidth * 0.0048)
+                                            : EdgeInsets.only(
+                                                top: screenWidth * 0.0155),
+                                        child: Text(
+                                          _data[index][0].toString(),
+                                          style: GoogleFonts.cabin(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: index == 0
+                                                ? screenWidth * 0.055
+                                                : screenWidth * 0.03,
+                                            color: index == 0
+                                                ? Colors.white
+                                                : Palette.kToDark[700],
+                                          ),
+                                        ),
+                                      ),
+                                      // minVerticalPadding: screenWidth * 0.01,
+                                      title: Text(
+                                        _data[index][1].toString(),
+                                        style: GoogleFonts.cabin(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: index == 0
+                                              ? screenWidth * 0.055
+                                              : screenWidth * 0.03,
+                                          color: index == 0
+                                              ? Colors.white
+                                              : Palette.kToDark[700],
+                                        ),
+                                      ),
+                                      trailing: Text(
+                                        _data[index][2].toString(),
+                                        style: GoogleFonts.cabin(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: index == 0
+                                              ? screenWidth * 0.055
+                                              : screenWidth * 0.03,
+                                          color: index == 0
+                                              ? Colors.white
+                                              : Palette.kToDark[700],
+                                        ),
                                       ),
                                     ),
+                                  );
+                                },
+                              ),
+                            ),
+                           
+                            Positioned(
+                              bottom: 0,
+                              left: 3,
+                              right: 3,
+                              child: Container(
+                                height: screenHeight * 0.05,
+                                width: screenWidth,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Colors.white54,
+                                      Colors.black54,
+                                    ],
                                   ),
-                                  // minVerticalPadding: screenWidth * 0.01,
-                                  title: Text(
-                                    _data[index][1].toString(),
-                                    style: GoogleFonts.cabin(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: index == 0
-                                          ? screenWidth * 0.055
-                                          : screenWidth * 0.03,
-                                      color: index == 0
-                                          ? Colors.white
-                                          : Palette.kToDark[700],
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    _data[index][2].toString(),
-                                    style: GoogleFonts.cabin(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: index == 0
-                                          ? screenWidth * 0.055
-                                          : screenWidth * 0.03,
-                                      color: index == 0
-                                          ? Colors.white
-                                          : Palette.kToDark[700],
-                                    ),
-                                  ),
+                                  // borderRadius: BorderRadius.circular(
+                                  //     screenWidth * 0.02),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         )
                       : Padding(
                           padding: EdgeInsets.symmetric(

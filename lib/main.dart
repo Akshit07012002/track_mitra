@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:track_mitra/screens/home.dart';
+import 'package:track_mitra/screens/bnb.dart';
+import 'package:track_mitra/screens/main_tabs/home.dart';
 import 'package:track_mitra/utils/colours.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MainApp extends StatelessWidget {
       ),
       
       debugShowCheckedModeBanner: false,
-      home: const HomePage()
+      home: const CurvedBNB()
     );
   }
 }
