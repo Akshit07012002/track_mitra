@@ -14,9 +14,12 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Track Mitra',
       theme: ThemeData.dark().copyWith(
+        androidOverscrollIndicator: AndroidOverscrollIndicator.stretch,
+
         primaryColor: Palette.kToDark,
         scaffoldBackgroundColor: Palette.kToDark,
       ),
+      
       debugShowCheckedModeBanner: false,
       home: const HomePage()
     );

@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
               // ),
               Padding(
                 padding: EdgeInsets.only(
-                    top: screenWidth * 0.07, bottom: screenWidth * 0.04),
+                    top: screenWidth * 0.08, bottom: screenWidth * 0.04),
                 child: SizedBox(
                   height: screenHeight * 0.05,
                   child: Row(
@@ -232,6 +232,25 @@ class _HomePageState extends State<HomePage> {
                           print('Extension: .${pickedFile!.extension}');
                           print('Path: ${pickedFile!.path}');
 
+                          _loadCSV();
+
+                          Future.delayed(const Duration(seconds: 2), () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "File Converted!",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.cabin(
+                                    fontSize: screenWidth * 0.05,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                backgroundColor: Colors.black54,
+                              ),
+                            );
+                          });
+
                           setState(() {
                             isLoading = false;
                           });
@@ -243,41 +262,41 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       // upload button
-                      if (pickedFile != null)
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black54,
-                          ),
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            // final url2 = uploadFile().toString();
-                            // documentFileUpload(url2);
-                            Future.delayed(const Duration(seconds: 2), () {
-                              setState(() {
-                                isLoading = false;
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    "File Converted!",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.cabin(),
-                                  ),
-                                ),
-                              );
-                            });
-                            _loadCSV();
-                            setState(() {
-                              isLoading = false;
-                            });
-                          },
-                          child: const Text(
-                            'Convert File',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                      // if (pickedFile != null)
+                      //   ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Colors.black54,
+                      //     ),
+                      //     onPressed: () async {
+                      //       setState(() {
+                      //         isLoading = true;
+                      //       });
+                      //       // final url2 = uploadFile().toString();
+                      //       // documentFileUpload(url2);
+                      //       Future.delayed(const Duration(seconds: 2), () {
+                      //         setState(() {
+                      //           isLoading = false;
+                      //         });
+                      //         ScaffoldMessenger.of(context).showSnackBar(
+                      //           SnackBar(
+                      //             content: Text(
+                      //               "File Converted!",
+                      //               textAlign: TextAlign.center,
+                      //               style: GoogleFonts.cabin(),
+                      //             ),
+                      //           ),
+                      //         );
+                      //       });
+                      //       _loadCSV();
+                      //       setState(() {
+                      //         isLoading = false;
+                      //       });
+                      //     },
+                      //     child: const Text(
+                      //       'Convert File',
+                      //       style: TextStyle(fontWeight: FontWeight.bold),
+                      //     ),
+                      //   ),
                     ],
                   ),
                 ),
@@ -314,10 +333,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                   : (pickedFile!.extension == 'csv')
-                      ? SizedBox(
-                          height: screenHeight * 0.6,
+                      ? Container(
+                          height: screenHeight * 0.5,
+                          padding: EdgeInsets.only(
+                              top: screenWidth * 0.03),
                           child: ListView.builder(
                             itemCount: _data.length,
+                            // physics: const ingScrollPhysics(),
                             itemBuilder: (_, index) {
                               return Card(
                                 margin: const EdgeInsets.all(3),
@@ -325,24 +347,28 @@ class _HomePageState extends State<HomePage> {
                                     ? Palette.kToDark[00]
                                     : Colors.white,
                                 child: ListTile(
-                                  leading: Text(
-                                    _data[index][0].toString(),
-                                    style: GoogleFonts.cabin(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: index == 0
-                                          ? screenWidth * 0.05
-                                          : screenWidth * 0.03,
-                                      color: index == 0
-                                          ? Colors.white
-                                          : Palette.kToDark[700],
+                                  leading: Padding(
+                                    padding: index == 0 ?  EdgeInsets.only(top: screenWidth * 0.0048) : EdgeInsets.only(top: screenWidth * 0.0155),
+                                    child: Text(
+                                      _data[index][0].toString(),
+                                      style: GoogleFonts.cabin(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: index == 0
+                                            ? screenWidth * 0.055
+                                            : screenWidth * 0.03,
+                                        color: index == 0
+                                            ? Colors.white
+                                            : Palette.kToDark[700],
+                                      ),
                                     ),
                                   ),
+                                  // minVerticalPadding: screenWidth * 0.01,
                                   title: Text(
                                     _data[index][1].toString(),
                                     style: GoogleFonts.cabin(
                                       fontWeight: FontWeight.bold,
                                       fontSize: index == 0
-                                          ? screenWidth * 0.05
+                                          ? screenWidth * 0.055
                                           : screenWidth * 0.03,
                                       color: index == 0
                                           ? Colors.white
@@ -354,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                                     style: GoogleFonts.cabin(
                                       fontWeight: FontWeight.bold,
                                       fontSize: index == 0
-                                          ? screenWidth * 0.05
+                                          ? screenWidth * 0.055
                                           : screenWidth * 0.03,
                                       color: index == 0
                                           ? Colors.white
